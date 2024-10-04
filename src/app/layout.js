@@ -1,11 +1,17 @@
-export default function RootLayout(){
+import Navbar from "@/components/navbar";
+import "bootstrap/dist/css/bootstrap.min.css"
+//import "@/app/style.css"
+
+export const metadata={
+    title:"Web con next",
+    description:"Front end con next"
+}
+export default function RootLayout({children}){
     return(
         <html>
-            <head>
-                <title>Next</title>
-            </head>
             <body>
-                <h1>Hola este es next</h1>
+                <Navbar/>
+                {children}
             </body>
         </html>
     );
