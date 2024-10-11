@@ -20,6 +20,9 @@ export default function Navbar(){
             <li className="nav-item">
             <Link className="nav-link" href="/universidades">Universidades</Link>
             </li>
+            <li className="nav-item">
+            <Link className="nav-link" href="/user">Usuarios</Link>
+            </li>
             <li className="nav-item dropdown">
             <Link className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown
