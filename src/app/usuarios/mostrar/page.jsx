@@ -1,5 +1,5 @@
+import DeleteUser from "@/components/borrar";
 import axios from "axios";
-
 
 async function getUsuarios() {
     const url = "http://localhost:3000";
@@ -19,6 +19,7 @@ export default async function User() {
                         <th>Id</th>
                         <th>Nombre</th>
                         <th>Usuario</th>
+                        <th>Edit / Borrar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,6 +29,9 @@ export default async function User() {
                                 <td>{i+1}</td>
                                 <td>{usuarios.nombre}</td>
                                 <td>{usuarios.usuario}</td>
+                                <td>
+                                    <DeleteUser id={usuarios.id}/>
+                                </td>
                             </tr>
                         ))
                     }
