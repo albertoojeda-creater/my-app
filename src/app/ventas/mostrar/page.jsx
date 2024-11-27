@@ -29,6 +29,7 @@ export default async function Ventas() {
                         <th>Usuario</th> {/* Mostrar el nombre del usuario */}
                         <th>Producto</th> {/* Mostrar el nombre del producto */}
                         <th>Cantidad Vendida</th>
+                        <th>Precio</th> {/* Mostrar el precio */}
                         <th>Estado</th> {/* Mostrar el estado */}
                         <th>Editar / Cancelar</th>
                     </tr>
@@ -46,6 +47,7 @@ export default async function Ventas() {
                                     <td>{venta.usuarioNombre}</td> {/* Mostrar el nombre del usuario */}
                                     <td>{venta.productoNombre}</td> {/* Mostrar el nombre del producto */}
                                     <td>{venta.cantidad}</td>
+                                    <td>{venta.precio} {/* Mostrar el precio */}</td>
                                     <td>{venta.estado}</td> {/* Mostrar el estado de la venta */}
                                     <td>
                                         <div className="d-flex">
@@ -58,7 +60,7 @@ export default async function Ventas() {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="6">No se encontraron ventas con el estado "Vendido".</td>
+                                <td colSpan="7">No se encontraron ventas con el estado "Vendido".</td>
                             </tr>
                         )
                     }
@@ -67,3 +69,4 @@ export default async function Ventas() {
         </>
     );
 }
+
