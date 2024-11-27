@@ -1,9 +1,9 @@
 'use client';
-import { useEffect, useRef, useState } from "react"; // Importa useEffect, useRef y useState
+import { useEffect, useState } from "react"; // Importa useEffect y useState
 import axios from "axios";
 import '../../../../components/EditarVenta.css'; // Ruta al archivo CSS
 
-async function editVenta(e, id, usuarioId, productoId) {
+async function editVenta(e, id, usuarioId, productoId, cantidad) {
     e.preventDefault(); // Evita la acción predeterminada del formulario
 
     // Verificar que los IDs de usuario y producto no sean vacíos
@@ -14,7 +14,7 @@ async function editVenta(e, id, usuarioId, productoId) {
 
     const url = `http://localhost:3000/ventas/editarVenta/${id}`; // URL para editar la venta
     const datos = {
-        cantidad: document.getElementById("cantidad").value, // Campo de cantidad
+        cantidad: cantidad, // Utilizamos la cantidad del estado
         idUsuario: usuarioId, // ID del usuario seleccionado
         idProducto: productoId // ID del producto seleccionado
     };
@@ -31,7 +31,6 @@ async function editVenta(e, id, usuarioId, productoId) {
 }
 
 export default function EditarVenta({ params }) {
-    const cantidadRef = useRef(null);
     const [usuarioId, setUsuarioId] = useState(""); // Estado para el ID de usuario
     const [productoId, setProductoId] = useState(""); // Estado para el ID de producto
     const [usuarioNombre, setUsuarioNombre] = useState(""); // Estado para el nombre del usuario
@@ -51,7 +50,7 @@ export default function EditarVenta({ params }) {
                     const response = await axios.get(url);
                     console.log(response.data); // Verifica los datos recibidos
 
-                    // Asignar los valores directamente a los elementos del DOM
+                    // Asignar los valores directamente a los estados
                     setCantidad(response.data.cantidad); // Asigna la cantidad al estado
                     setUsuarioId(response.data.idUsuario); // Asigna el ID del usuario
                     setProductoId(response.data.idProducto); // Asigna el ID del producto
@@ -65,11 +64,6 @@ export default function EditarVenta({ params }) {
             }
         }
         fetchVenta();
-
-        // Enfocar el campo de "Cantidad" después de que la venta se cargue
-        if (cantidadRef.current) {
-            cantidadRef.current.focus();
-        }
 
         // Obtener usuarios y productos para el autocompletado
         async function fetchUsuariosProductos() {
@@ -125,7 +119,7 @@ export default function EditarVenta({ params }) {
     return (
         <>
             <div className="m-0 row justify-content-center">
-                <form className="col-6 mt-5 text-center" onSubmit={(e) => editVenta(e, id, usuarioId, productoId)} action="" method="post">
+                <form className="col-6 mt-5 text-center" onSubmit={(e) => editVenta(e, id, usuarioId, productoId, cantidad)} action="" method="post">
                     <div className="card">
                         <div className="card-header">
                             <h1>Editar Venta</h1>
@@ -185,7 +179,6 @@ export default function EditarVenta({ params }) {
 
                             {/* Cantidad */}
                             <input
-                                ref={cantidadRef} // Usar referencia para el campo de cantidad
                                 id="cantidad"
                                 placeholder="Cantidad Vendida"
                                 className="form-control mb-3"

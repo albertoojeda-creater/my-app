@@ -6,9 +6,9 @@ export default function NuevaVenta() {
     const [usuarioId, setUsuarioId] = useState(""); // Estado para ID de Usuario
     const [productoId, setProductoId] = useState(""); // Estado para ID de Producto
     const [cantidad, setCantidad] = useState(""); // Estado para Cantidad
-
     const [usuarioNombre, setUsuarioNombre] = useState(""); // Estado para el nombre de usuario
     const [productoNombre, setProductoNombre] = useState(""); // Estado para el nombre de producto
+    const [precio, setPrecio] = useState(0); // Estado para el precio del producto
     const [usuarios, setUsuarios] = useState([]); // Estado para lista de usuarios
     const [productos, setProductos] = useState([]); // Estado para lista de productos
     const [filteredUsuarios, setFilteredUsuarios] = useState([]); // Estado para usuarios filtrados
@@ -63,7 +63,13 @@ export default function NuevaVenta() {
     const handleSelectProducto = (producto) => {
         setProductoId(producto.id); // Establece el ID del producto
         setProductoNombre(producto.nombre); // Establece el nombre del producto
+        setPrecio(producto.precio); // Establece el precio del producto seleccionado
         setFilteredProductos([]); // Cierra la lista de sugerencias
+    };
+
+    // Función para calcular el total de la venta (cantidad * precio)
+    const calcularTotal = () => {
+        return cantidad && precio ? cantidad * precio : 0;
     };
 
     // Función para enviar la nueva venta
@@ -75,7 +81,8 @@ export default function NuevaVenta() {
         const datos = {
             idUsuario: usuarioId, // Enviar el ID de usuario
             idProducto: productoId, // Enviar el ID de producto
-            cantidad: cantidad // Manteniendo como texto
+            cantidad: cantidad, // Manteniendo como texto
+            precio: calcularTotal(), // Enviar el precio total de la venta (calculado)
         };
 
         try {
@@ -158,6 +165,13 @@ export default function NuevaVenta() {
                                 onChange={(e) => setCantidad(e.target.value)} // Actualizando el estado
                                 required // Campo requerido
                             />
+
+                            {/* Mostrar el precio total de la venta */}
+                            {cantidad && precio && (
+                                <div className="mb-3">
+                                    <strong>Total de la venta: </strong>${calcularTotal()}
+                                </div>
+                            )}
                         </div>
                         <div className="card-footer">
                             <button className="btn btn-primary col-12 mt-3 mb-3" type="submit">Guardar venta</button>
@@ -168,3 +182,4 @@ export default function NuevaVenta() {
         </>
     );
 }
+
